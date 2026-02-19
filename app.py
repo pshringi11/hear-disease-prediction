@@ -12,6 +12,8 @@ bp = st.number_input("Blood Pressure", min_value=50, max_value=250, value=120)
 chol = st.number_input("Cholesterol", min_value=100, max_value=600, value=200)
 hr = st.number_input("Max Heart Rate", min_value=50, max_value=220, value=150)
 gender = st.selectbox("Gender", ["Male", "Female"])
+thal = st.selectbox("Thallium Test Result", [3, 6, 7], help="3: Normal, 6: Fixed defect, 7: Reversible defect")
+cp = st.selectbox("Chest Pain Type", [0, 1, 2, 3, 4], help="0: Typical, 1: Atypical, 2: Non-anginal, 3: Asymptomatic, 4: Other")
 
 feature_cols = ['Age', 'Sex', 'Chest pain type', 'BP', 'Cholesterol', 
                 'FBS over 120', 'EKG results', 'Max HR', 'Exercise angina', 
@@ -21,7 +23,7 @@ if st.button("Predict"):
   input_data = pd.DataFrame([{
         'Age': age,
         'Sex': 1 if gender == "Male" else 0,
-        'Chest pain type': 4,
+        'Chest pain type': cp,
         'BP': bp,
         'Cholesterol': chol,
         'FBS over 120': 0,
@@ -31,7 +33,7 @@ if st.button("Predict"):
         'ST depression': 1.0,
         'Slope of ST': 2,
         'Number of vessels fluro': 0,
-        'Thallium': 3
+        'Thallium': thal
     }])
   input_data = input_data[feature_cols]
   prediction = model.predict(input_data)
