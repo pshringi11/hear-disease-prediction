@@ -30,6 +30,6 @@ if st.button("Predict"):
   input_df = pd.DataFrame([input_dict])
   prediction = model.predict(input_df)
   if prediction[0] == 'Presence': # Assuming the model predicts 'Presence' or 'Absence'
-    st.error("Warning: Heart Disease ka khatra hai! ⚠️")
+    st.error("Warning: Heart Disease ⚠️")
   else:
-    st.success("Aap ekdam fit hain! ✅")
+    st.success("You are fit and fine ✅")
