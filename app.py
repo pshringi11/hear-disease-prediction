@@ -5,7 +5,18 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder,LabelEncoder,StandardScaler,OrdinalEncoder
 
 model = joblib.load('heart_model_pipeline.pkl')
-st.title("Heart Disease Prediction App ❤️")
+st.sidebar.title("Model Settings ⚙️")
+model_choice = st.sidebar.radio(
+    "Choose Prediction Model:",
+    ("Random Forest", "XGBoost")
+  @st.cache_resource
+def load_selected_model(choice):
+    if choice == "Random Forest":
+        return joblib.load('heart_model_pipeline.pkl') 
+    else:
+        return joblib.load('xgb_model.pkl')
+st.title("Heart Disease Prediction App ({model_choice}) ❤️")
+st.sidebar.info(f"Currently using: {model_choice}")
 st.write("Enter the patient's information to predict heart disease.")
 age = st.number_input("Age", min_value=1, max_value=120, value=30)
 bp = st.number_input("Blood Pressure", min_value=50, max_value=250, value=120)
@@ -37,7 +48,7 @@ if st.button("Predict"):
     }])
   input_data = input_data[feature_cols]
   prediction = model.predict(input_data)
-  if prediction[0] == 'Presence':
-    st.error("Warning: Heart Disease ⚠️")
+  if str(prediction[0]) == '1' or str(prediction[0]).lower() == 'presence':
+        st.error(f"Prediction by {model_choice}: High Risk! ⚠️")
   else:
-    st.success("You are fit and fine ✅")
+        st.success(f"Prediction by {model_choice}: Low Risk! ✅")
