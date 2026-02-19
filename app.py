@@ -8,7 +8,7 @@ model = joblib.load('heart_model_pipeline.pkl')
 st.sidebar.title("Model Settings ⚙️")
 model_choice = st.sidebar.radio(
     "Choose Prediction Model:",
-    ("Random Forest", "XGBoost")
+    ("Random Forest", "XGBoost"))
   @st.cache_resource
 def load_selected_model(choice):
     if choice == "Random Forest":
