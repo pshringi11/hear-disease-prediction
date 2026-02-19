@@ -1,6 +1,9 @@
 import streamlit as st
 import joblib
 import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder,LabelEncoder,StandardScaler,OrdinalEncoder
+ 
 
 model = joblib.load('heart_model_pipeline.pkl')
 st.title("Heart Disease Prediction App ❤️")
