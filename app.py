@@ -13,24 +13,28 @@ chol = st.number_input("Cholesterol", min_value=100, max_value=600, value=200)
 hr = st.number_input("Max Heart Rate", min_value=50, max_value=220, value=150)
 gender = st.selectbox("Gender", ["Male", "Female"])
 
+feature_cols = ['Age', 'Sex', 'Chest pain type', 'BP', 'Cholesterol', 
+                'FBS over 120', 'EKG results', 'Max HR', 'Exercise angina', 
+                'ST depression', 'Slope of ST', 'Number of vessels fluro', 'Thallium']
+
 if st.button("Predict"):
-  input_dict = {
+  input_data = pd.DataFrame([{
         'Age': age,
-        'BP': bp,
-        'Cholesterol': chol,
-        'Max HR': hr,
         'Sex': 1 if gender == "Male" else 0,
         'Chest pain type': 4,
+        'BP': bp,
+        'Cholesterol': chol,
         'FBS over 120': 0,
         'EKG results': 2,
+        'Max HR': hr,
         'Exercise angina': 0,
         'ST depression': 1.0,
         'Slope of ST': 2,
         'Number of vessels fluro': 0,
         'Thallium': 3
-    }
-  input_df = pd.DataFrame([input_dict])
-  prediction = model.predict(input_df)
+    }])
+  input_data = input_data[feature_cols]
+  prediction = model.predict(input_data)
   if prediction[0] == 'Presence':
     st.error("Warning: Heart Disease ⚠️")
   else:
