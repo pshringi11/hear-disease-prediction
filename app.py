@@ -15,7 +15,7 @@ def load_selected_model(choice):
         return joblib.load('heart_model_pipeline.pkl') 
     else:
         return joblib.load('xgb_model.pkl')
-model = load_selected_model(model_choice)
+
 st.title(f"Heart Disease Prediction App ({model_choice}) ❤️")
 st.sidebar.info(f"Currently using: {model_choice}")
 st.write("Enter the patient's information to predict heart disease.")
